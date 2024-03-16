@@ -1,3 +1,4 @@
+print('Digite os números para fazer as analises')
 dados = (int(input('Digite o primeiro número: ')),int(input('Digite outro número: ')),
          int(input('Digite outro número: ')),int(input('Digite o último número: ')))
 print(f'O número 9 apareceu {dados.count(9)} vezes')
