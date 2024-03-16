@@ -10,3 +10,4 @@ for c in dados:
     if (int(c) % 2) == 0:
         print(c, end=', ')
         
+        
