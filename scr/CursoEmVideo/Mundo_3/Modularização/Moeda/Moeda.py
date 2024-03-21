@@ -2,7 +2,7 @@ def resumo(num=0,taxa=0,moeda='R$'):
     dobro(num)
     metade(num)
     amumento10Porc(num,taxa)
-    moeda1(num,moeda)
+    moeda1(num,moeda=moeda)
     
 def dobro(num):
     dobro = num * 2
