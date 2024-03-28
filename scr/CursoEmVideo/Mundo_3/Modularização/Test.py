@@ -1,6 +1,7 @@
 from Moeda import Moeda
+from Validacao import ValidacaoMoeda
 
-num = float(input('Digite um número: '))
+num = ValidacaoMoeda.validacao('Digite um número: ')
 
 print('~'*25)
 print('   INICIANDO CALCULOS')
