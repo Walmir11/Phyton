@@ -7,6 +7,4 @@ def validacao(msg):
             return float(entrada)
         else:
             print(f'Valor "{entrada}" inválido. Por favor, insira um número válido.')
-
-
         
