@@ -19,10 +19,10 @@ def cabecalho(msg):
 
 def menu(lista):
     cabecalho('Menu do Sistema')
-    i = 0
+    i = 1
     for c in lista:
         print(f'{i} - {c}')
-        i =+ 1
+        i += 1
     cabecalho('Digite a sua opcao')
     opc = ValidacaoInt('Digite um número inteiro: ')
     return opc

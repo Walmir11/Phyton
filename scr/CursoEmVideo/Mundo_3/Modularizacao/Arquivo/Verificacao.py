@@ -20,9 +20,28 @@ def criarArquivo(nome):
 
 def lerArquivo(nome):
     try:
-        arquivo = open(nome, 'rt')
+        a = open(nome, 'rt')
     except:
         print('Erro ao ler o arquivo!')
     else:
         cabecalho('PESSOAS CADASTRADAS')
-        print(arquivo.read())
+        for c in a:
+            dado = c.split(';')   
+            dado[1] = dado[1].replace('\n','')
+            print(f'Nome: {dado[0]:<30} {dado[1]:>3} anos')   
+    finally:
+        a.close
+
+def cadastrar(arq, nome='desconhecido', idade=0):
+    try:
+        a = open(arq, 'at')
+    except:
+        print('Houve um erro ao adicionar um dado.')
+    else:
+        try:
+            a.write(f'{nome};{idade}\n')  # Escreve os dados no arquivo
+        except:
+            print('Ouve um problema ao adicionar os dados')
+        else:        
+            print(f'Novo registro de {nome} adicionado')
+            a.close()

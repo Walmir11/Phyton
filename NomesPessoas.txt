@@ -1,0 +1,4 @@
+jose;35
+Arnaldo;31
+Maria;65
+Walmir;21

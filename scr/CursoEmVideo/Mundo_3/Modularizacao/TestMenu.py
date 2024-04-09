@@ -12,7 +12,10 @@ while True:
         cabecalho('Opção 1')
         lerArquivo(arq)
     elif resposta == 2:
-        cabecalho('Opção 2')
+        cabecalho('Novo Cadastro')
+        nome = input('Nome: ')
+        idade = ValidacaoInt('Idade: ')
+        cadastrar(arq,nome,idade)
     elif resposta == 3:
         cabecalho('Saindo do sistema... Até logo')
         break
