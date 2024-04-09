@@ -1,9 +1,16 @@
 from Menu.Menu import *
+from Arquivo.Verificacao import *
+
+arq = 'NomesPessoas.txt'
+
+if not arquivoExistente(arq):
+    criarArquivo(arq)
 
 while True:
     resposta = menu(['Ver pessoas cadastradas', 'Cadastrar nova pessoa', 'Sair do sistema'])
     if resposta == 1:
         cabecalho('Opção 1')
+        lerArquivo(arq)
     elif resposta == 2:
         cabecalho('Opção 2')
     elif resposta == 3:
