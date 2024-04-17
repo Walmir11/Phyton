@@ -4,7 +4,7 @@ saldo = 0
 extrato = []
 numeroSaques = 0
 
-while True:
+while True:    
     opcao = int(input(menu))
 
     if opcao == 1:
@@ -17,11 +17,11 @@ while True:
     elif opcao == 2:
         print('Sacar')
         if saldo <= 0:
-            print('Impossível fazer depósito com saldo no 0')
+            print('Impossível fazer saque com saldo no zerado')
         else:
             saque = float(input('Digite o valor do saque: '))
             if saque>500:
-                print('Limite do saque é 500')
+                print('O limite é 500, tente um valor mais baixo')
             else:
                 if numeroSaques == 3:
                     print('Seu limite de saque diário já foi ultrapassado!')
@@ -37,10 +37,11 @@ while True:
         print('-'*40)
         print(f'Saldo R${saldo}')
         for indice, acao in enumerate(extrato):
-            print(f" {indice}- {acao}")
+            print(f" {indice+1}- {acao}")
+        print('~'*40)
 
     elif opcao == 4:
-        print('Saindo do programa, até mais tarde')
+        print('Saindo do programa, até mais tarde...')
         break
 
     else:
