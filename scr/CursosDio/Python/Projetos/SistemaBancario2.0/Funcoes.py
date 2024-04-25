@@ -8,7 +8,6 @@ listaPessoas = {}
 listaContas = {}
 
 def depositar(deposito,/):
-    global extrato
     global numeroSaques
     global saldo
     if deposito>0:
@@ -19,7 +18,6 @@ def depositar(deposito,/):
         print(f'Valor de deposito invalido!!')
 
 def sacar(*,saque):
-    global extrato
     global numeroSaques
     global saldo
     if saldo <= 0:
