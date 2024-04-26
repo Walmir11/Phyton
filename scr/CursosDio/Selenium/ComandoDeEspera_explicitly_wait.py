@@ -22,3 +22,12 @@ browser.find_element(By.ID, 'populate-text').click()
 wait.until(EC.text_to_be_present_in_element((By.XPATH, "//h2[@class='target-text']"),'Selenium Webdriver'))
 target_text = browser.find_element(By.XPATH, "//h2[@class='target-text']").text
 assert target_text == 'Selenium Webdriver'
+
+#Deixar elemento clicável
+browser.find_element(By.ID,'display-other-button').click()
+wait.until(EC.element_to_be_clickable((By.ID,'hidden')))
+
+browser.find_element(By.ID,'checkbox').click()
+checkbox = browser.find_element(By.ID,"ch")
+wait.until(EC.element_to_be_selected(checkbox))
+time.sleep(2)
