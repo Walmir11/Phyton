@@ -6,4 +6,4 @@ b1.buzinar()
 b1.correr()
 b1.parar()
 
-print(b1.cor)
+print(b1)
