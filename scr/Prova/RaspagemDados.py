@@ -9,22 +9,19 @@ driver = webdriver.Edge()
 # Acesse a página do Twitch
 driver.maximize_window()
 driver.get('https://www.twitch.tv/')
+driver.implicitly_wait(12)
 info_streamers = []
 
 # Faça login (substitua 'seu_usuario' e 'sua_senha' pelas suas credenciais)
 driver.find_element(By.XPATH, "//*[@data-a-target='login-button']").click()
-time.sleep(2)
 driver.find_element(By.ID,'login-username').send_keys('giniceu')  # Substitua com seu nome de usuário
 driver.find_element(By.ID,'password-input').send_keys('monteirobem10')   # Substitua com sua senha
 driver.find_element(By.XPATH,"//button[@data-a-target='passport-login-button']").click()
-time.sleep(2)
 
 categorias = ['Just Chatting', 'League of Legends', 'Counter-Strike', 'VALORANT', 'Grand Theft Auto V']
 
 for categoria in categorias:
-    driver.get(f'https://www.twitch.tv/directory/game/{categoria}')
-    time.sleep(2)
-    
+    driver.get(f'https://www.twitch.tv/directory/game/{categoria}')    
     
     # Raspe as informações dos streamers
     streamers = driver.find_elements(By.XPATH,"//*[@class='CoreText-sc-1txzju1-0 gBknDX'] ")
