@@ -66,13 +66,12 @@ df['Visualizações'] = df['Visualizações'].apply(convert_to_int)
 # Remover linhas com menos de 100 espectadores
 df = df[df['Visualizações'] >= 100]
 
-# Remover linhas duplicadas
-df_unique = df.drop_duplicates()
-
-# Ordenar o DataFrame
+df = df.drop_duplicates()
 df = df.sort_values('Visualizações', ascending=False)
+df = df.reset_index(drop=True)
 
-df.to_csv('dados_streamers.csv', sep=';')
+# Exportar DataFrame para um arquivo CSV
+df.to_csv('Dados_Streamers.csv', sep=';', encoding='utf-8', index=False)
 
 print(df)
 
