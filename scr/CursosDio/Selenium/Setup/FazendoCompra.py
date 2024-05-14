@@ -1,15 +1,16 @@
 import time
 import pytest
 from selenium.webdriver.common.by import By
-import Conftest
+import conftest
 
 #Chama o setup que está na Conftest
 @pytest.mark.usefixtures('setup_teardown')
 #para chamar o específico
 @pytest.mark.carrinho
+
 class TestCT01:
     def test_ct01_adicionar_produtos_carrinho(self):
-        driver = Conftest.driver
+        driver = conftest.driver
         driver.find_element(By.ID,'user-name').send_keys('standard_user')
         driver.find_element(By.ID,'password').send_keys('secret_sauce')
         driver.find_element(By.ID,'login-button').click()
