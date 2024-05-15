@@ -1,6 +1,8 @@
 import time
 import pytest
 from selenium.webdriver.common.by import By
+from pages.Login_page import LoginPage
+from pages.home_page import HomePage
 import conftest
 
 #Chama o setup que está na Conftest
@@ -10,16 +12,21 @@ import conftest
 class TestCT01:
     def test_ct01_adicionar_produtos_carrinho(self):
         driver = conftest.driver
-        driver.find_element(By.ID,'user-name').send_keys('standard_user')
-        driver.find_element(By.ID,'password').send_keys('secret_sauce')
-        driver.find_element(By.ID,'login-button').click()
-        
-        driver.find_element(By.XPATH,"//*[@class='inventory_item_name ' and text()='Sauce Labs Backpack']").click()
-        driver.find_element(By.XPATH,"//*[text()='Add to cart']").click()
+        login_page = LoginPage()
+        home_page = HomePage()
+
+        #Fazer login
+        login_page.fazer_login('standard_user','secret_sauce')
+
+        #Adicionando ao carrinho
+        home_page.adicionar_ao_carrinho('Sauce Labs Backpack')
+
+        #Voltando para fazer outra compra
         driver.find_element(By.ID,'back-to-products').click()
         
         driver.find_element(By.XPATH,"//*[@class='inventory_item_name ' and text()='Sauce Labs Bike Light']").click()
         driver.find_element(By.XPATH,"//*[text()='Add to cart']").click()
+        
         driver.find_element(By.XPATH,"//*[@class='shopping_cart_link']").click()
         driver.find_element(By.ID,'checkout').click()
         driver.find_element(By.ID,'first-name').send_keys('Walmir')

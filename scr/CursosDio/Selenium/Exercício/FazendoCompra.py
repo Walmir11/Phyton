@@ -6,11 +6,11 @@ driver = webdriver.Edge()
 driver.maximize_window()
 driver.get('https://www.saucedemo.com/')
 driver.implicitly_wait(3)
-
+#login
 driver.find_element(By.ID,'user-name').send_keys('standard_user')
 driver.find_element(By.ID,'password').send_keys('secret_sauce')
 driver.find_element(By.ID,'login-button').click()
-
+#adicionando ao carrinho
 driver.find_element(By.XPATH,"//*[@class='inventory_item_name ' and text()='Sauce Labs Backpack']").click()
 driver.find_element(By.XPATH,"//*[text()='Add to cart']").click()
 
