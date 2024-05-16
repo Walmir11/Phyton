@@ -3,6 +3,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from pages.Login_page import LoginPage
 from pages.home_page import HomePage
+from pages.carrinho_page import CarrinhoPage
 import conftest
 
 #Chama o setup que está na Conftest
@@ -14,20 +15,30 @@ class TestCT01:
         driver = conftest.driver
         login_page = LoginPage()
         home_page = HomePage()
+        carrinho_page = CarrinhoPage()
+        produto1 = 'Sauce Labs Backpack'
+        produto2 = 'Sauce Labs Bike Light'
 
         #Fazer login
         login_page.fazer_login('standard_user','secret_sauce')
 
         #Adicionando ao carrinho
-        home_page.adicionar_ao_carrinho('Sauce Labs Backpack')
+        home_page.adicionar_ao_carrinho(produto1)
+        time.sleep(2)
+        #Verificando se está no carrinho
+        home_page.acessar_carrinho()
+        carrinho_page.verificar_produto_carrinho_existe(produto1)
+        time.sleep(2)
 
         #Voltando para fazer outra compra
-        driver.find_element(By.ID,'back-to-products').click()
+        carrinho_page.clicar_continuar_comprando()
         
-        driver.find_element(By.XPATH,"//*[@class='inventory_item_name ' and text()='Sauce Labs Bike Light']").click()
-        driver.find_element(By.XPATH,"//*[text()='Add to cart']").click()
+        home_page.adicionar_ao_carrinho(produto2)
+        home_page.acessar_carrinho()
+        carrinho_page.verificar_produto_carrinho_existe(produto2)
+        carrinho_page.verificar_produto_carrinho_existe(produto1)
         
-        driver.find_element(By.XPATH,"//*[@class='shopping_cart_link']").click()
+        home_page.acessar_carrinho()
         driver.find_element(By.ID,'checkout').click()
         driver.find_element(By.ID,'first-name').send_keys('Walmir')
         driver.find_element(By.ID,'last-name').send_keys('Neto')
