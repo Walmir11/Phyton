@@ -16,6 +16,7 @@ class TestCT01:
         login_page = LoginPage()
         home_page = HomePage()
         carrinho_page = CarrinhoPage()
+        
         produto1 = 'Sauce Labs Backpack'
         produto2 = 'Sauce Labs Bike Light'
 
