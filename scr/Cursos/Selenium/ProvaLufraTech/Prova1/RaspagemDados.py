@@ -2,7 +2,6 @@ import pandas as pd
 from selenium import webdriver
 import itertools
 from selenium.webdriver.common.by import By
-import time
 
 driver = webdriver.Edge()
 

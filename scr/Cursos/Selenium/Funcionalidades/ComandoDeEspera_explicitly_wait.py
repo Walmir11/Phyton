@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-browser = webdriver.Edge()
+browser = webdriver.Chrome()
 #Tempo máximo esperado para um elemento funcionar
 browser.maximize_window()
 browser.get('https://chercher.tech/practice/explicit-wait-sample-selenium-webdriver')
