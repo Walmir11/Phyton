@@ -19,4 +19,10 @@ class Test01:
         time.sleep(2)
         base_page.clicar((By.XPATH,'//*[@class="-gray _flex _margin-b-10" and contains(text(), "Lagarto, SE")]'))
         time.sleep(2)
+        base_page.clicar((By.XPATH,"//*[@id='Botao_barra_navegacao_15_dias'][@class='link actTriggerGA']"))
+        time.sleep(2)
+
+        minimas = base_page.encontrarElementos(By.XPATH, '//span[@class="_margin-r-15"]')
+
+        dias = base_page.encontrarElementos(By.XPATH, '//div[@class="date-inside-circle"]')
         

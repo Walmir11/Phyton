@@ -18,9 +18,12 @@ time.sleep(2)
 driver.find_element(By.XPATH,'//*[@class="-gray _flex _margin-b-10" and contains(text(), "Lagarto, SE")]').click()
 time.sleep(2)
 
-driver.find_element(By.XPATH, "(//*[@id='Botao_barra_navegacao_15_dias'])[1]").click()
+driver.find_element(By.XPATH, "//*[@id='Botao_barra_navegacao_15_dias'][@class='link actTriggerGA']").click()
 time.sleep(2)
 
-driver.find_elements(By.XPATH, '//*[@class="_margin-r-15"]')
+elementos = driver.find_elements(By.XPATH, '//span[@class="_margin-r-15"]')
 
-//*[@alt='Temperatura mínima']
+for elemento in elementos:
+    texto = elemento.text
+    print(f"Texto do elemento: {texto}")
+    
