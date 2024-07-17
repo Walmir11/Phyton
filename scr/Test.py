@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Edge()
+driver = webdriver.Chrome()
 driver.maximize_window()
 driver.get('https://www.climatempo.com.br')
 driver.implicitly_wait(3)
@@ -21,9 +21,5 @@ time.sleep(2)
 driver.find_element(By.XPATH, "//*[@id='Botao_barra_navegacao_15_dias'][@class='link actTriggerGA']").click()
 time.sleep(2)
 
-elementos = driver.find_elements(By.XPATH, '//span[@class="_margin-r-15"]')
 
-for elemento in elementos:
-    texto = elemento.text
-    print(f"Texto do elemento: {texto}")
     
