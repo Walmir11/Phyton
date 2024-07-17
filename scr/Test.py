@@ -15,20 +15,15 @@ driver.maximize_window()
 driver.get('https://www.climatempo.com.br')
 driver.implicitly_wait(3)
 time.sleep(3)
-# Pesquisa por 'Lagarto'
-search_box = driver.find_element(By.ID, "searchGeneral")
-search_box.send_keys('Lagarto')
-time.sleep(3)
-try:
-    # Aguarda a lista de autocomplete aparecer
-    wait = WebDriverWait(driver, 10)
-    autocomplete_item = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='searchGeneral_autocomplete']/li[1]")))
 
-    # Usa ActionChains para clicar no item da lista de autocomplete
-    driver.find_element(By.XPATH, "//*[@id='searchGeneral_autocomplete']/li[1]").click
-    time.sleep(3)
-except Exception as e:
-    print(f"Erro ao selecionar o item da lista de autocomplete: {e}")
-finally:
-    time.sleep(3)
-    driver.quit()
+driver.find_element(By.ID,'Botao_mais_detalhes_card_tempo_no_momento').click()
+time.sleep(2)
+
+driver.find_element(By.XPATH, '//*[@itemprop="name" and text()="Cidade"]').click()
+time.sleep(2)
+
+driver.find_element(By.XPATH,'//*[@class="-gray _flex _margin-b-10" and contains(text(), "Lagarto, SE")]').click()
+time.sleep(2)
+
+driver.find_element(By.XPATH, "(//*[@id='Botao_barra_navegacao_15_dias'])[1]").click()
+time.sleep(2)

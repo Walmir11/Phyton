@@ -17,8 +17,6 @@ class Test01:
         time.sleep(2)
         base_page.clicar((By.XPATH, '//*[@itemprop="name" and text()="Cidade"]'))
         time.sleep(2)
-        base_page.clicar((By.XPATH, '//*[@class="_flex" and text()="L"]'))
-        time.sleep(5)
         base_page.clicar((By.XPATH,'//*[@class="-gray _flex _margin-b-10" and contains(text(), "Lagarto, SE")]'))
         time.sleep(2)
         
