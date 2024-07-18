@@ -1,10 +1,12 @@
+import time
 import pytest
+from pages.base_page import BasePage
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
-import time
 
 # Chama o setup que está na Conftest
 @pytest.mark.usefixtures('setup_teardown')
@@ -13,6 +15,11 @@ class Test01:
         base_page = BasePage()  # Passar o driver corretamente para BasePage
         driver = base_page.driver
         wait = WebDriverWait(driver, 30) 
+
+        def scroll_to_element(locator):
+            element = base_page.encontrarElemento(locator)
+            actions = ActionChains(driver)
+            actions.move_to_element(element).perform()
 
         botaoDetalhes = (By.ID, 'Botao_mais_detalhes_card_tempo_no_momento')
         Cidade = (By.XPATH, '(//*[@class="link"])[2]')
@@ -25,24 +32,32 @@ class Test01:
         base_page.clicar(botaoDetalhes)
         time.sleep(2)
 
+
         # Clicar para selecionar a cidade
         base_page.clicar(Cidade)
-        
+
         # Selecionar Lagarto, SE
         base_page.clicar(selecionarCidade)
         
         # Clicar para ver o clima para 15 dias
         base_page.clicar(clima_15Dias)
         time.sleep(10)
-        wait.until(EC.visibility_of_element_located(maisDias1)).click()
-        time.sleep(5)
-        wait.until(EC.visibility_of_element_located(maisDias2)).click()
+
+        # Scroll para o primeiro botão de mais dias e clicar
+        scroll_to_element(maisDias1)
+        wait.until(EC.element_to_be_clickable(maisDias1)).click()
         time.sleep(5)
 
+        # Scroll para o segundo botão de mais dias e clicar
+        scroll_to_element(maisDias2)
+        wait.until(EC.element_to_be_clickable(maisDias2)).click()
+        time.sleep(5)
 
-        for i in range(2,16):
+        # Loop para expandir todos os dropdowns de dias
+        for i in range(2, 16):
             dropdown_arrow = (By.XPATH, f"(//span[@class='dropdown-arrow'])[{i}]")
-            wait.until(EC.visibility_of_element_located(dropdown_arrow)).click()
+            scroll_to_element(dropdown_arrow)
+            wait.until(EC.element_to_be_clickable(dropdown_arrow)).click()
             time.sleep(1) 
 
         # Encontrar elementos de dias, temperaturas e umidades
@@ -91,10 +106,14 @@ class Test01:
         media_umidade = df['media_umidade'].mean()
 
         # Exibir os dados coletados
+        print("Dados coletados:")
         print(df)
 
         # Exibir as médias calculadas
         print(f"Média geral da temperatura: {media_temperatura:.2f}°C")
         print(f"Média geral da umidade: {media_umidade:.2f}%")
 
+        # Salvar os dados em um arquivo CSV
         df.to_csv('dados_clima.csv', sep=';', encoding='latin1', index=False)
+        print("Dados climáticos salvos em 'dados_clima.csv'.")
+ 
