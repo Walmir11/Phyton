@@ -1,4 +1,6 @@
 import pytest
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
@@ -8,7 +10,10 @@ import time
 @pytest.mark.usefixtures('setup_teardown')
 class Test01:
     def test_raspagem_clima_Lagarto(self):
-        base_page = BasePage()
+        base_page = BasePage()  # Passar o driver corretamente para BasePage
+        driver = base_page.driver
+        wait = WebDriverWait(driver, 30) 
+
         botaoDetalhes = (By.ID, 'Botao_mais_detalhes_card_tempo_no_momento')
         Cidade = (By.XPATH, '(//*[@class="link"])[2]')
         selecionarCidade = (By.XPATH, '//*[@class="-gray _flex _margin-b-10" and contains(text(), "Lagarto, SE")]')
@@ -19,24 +24,26 @@ class Test01:
         # Clicar no botão para ver mais detalhes do clima
         base_page.clicar(botaoDetalhes)
         time.sleep(2)
-        
+
         # Clicar para selecionar a cidade
         base_page.clicar(Cidade)
-        time.sleep(2)
         
         # Selecionar Lagarto, SE
         base_page.clicar(selecionarCidade)
-        time.sleep(2)
         
         # Clicar para ver o clima para 15 dias
         base_page.clicar(clima_15Dias)
-        time.sleep(2)
+        time.sleep(10)
+        wait.until(EC.visibility_of_element_located(maisDias1)).click()
+        time.sleep(5)
+        wait.until(EC.visibility_of_element_located(maisDias2)).click()
+        time.sleep(5)
 
-        base_page.clicar(maisDias1)
-        time.sleep(2)
 
-        base_page.clicar(maisDias2)
-        time.sleep(2)
+        for i in range(2,16):
+            dropdown_arrow = (By.XPATH, f"(//span[@class='dropdown-arrow'])[{i}]")
+            wait.until(EC.visibility_of_element_located(dropdown_arrow)).click()
+            time.sleep(1) 
 
         # Encontrar elementos de dias, temperaturas e umidades
         dias = base_page.encontrarElementos((By.XPATH, '//div[@class="date-inside-circle" or @class="date-inside-circle with-alert"]'))
