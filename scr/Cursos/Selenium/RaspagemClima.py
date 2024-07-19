@@ -55,12 +55,13 @@ driver.implicitly_wait(5)
 # Loop para expandir todos os dropdowns de dias
 driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.HOME)
 driver.implicitly_wait(5)
+# Sleep para garantir que a ação de clicar no elemento seja completada antes que o script passe para a próxima interação.
+time.sleep(1)
 
 for i in range(2, 16):
     dropdown_arrow = (By.XPATH, f"(//span[@class='dropdown-arrow'])[{i}]")
     driver.execute_script('scrollBy(0,800)')
     wait.until(EC.element_to_be_clickable(dropdown_arrow)).click()
-    # Sleep para garantir que a ação de clicar no elemento seja completada antes que o script passe para a próxima interação.
     time.sleep(1)
 
 # Encontrar elementos de dias, temperaturas e umidades
