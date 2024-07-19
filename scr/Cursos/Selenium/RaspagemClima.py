@@ -25,7 +25,8 @@ maisDias2 = (By.ID, "Botao_2_mais_5_dias_timeline_15_dias")
 
 # Clicar no botão para ver mais detalhes do clima
 driver.find_element(*botaoDetalhes).click()
-time.sleep(2)
+driver.implicitly_wait(5)
+# Para atualizar a página e evitar que um possível anúncio atrapalhe a execução
 driver.refresh()
 
 # Clicar para selecionar a cidade
@@ -38,26 +39,28 @@ driver.refresh()
 
 # Clicar para ver o clima para 15 dias
 driver.find_element(*clima_15Dias).click()
-time.sleep(10)
+driver.implicitly_wait(5)
 driver.refresh()
 
 # Scroll para o primeiro botão de mais dias e clicar
 driver.execute_script('scrollBy(0,1000)')
 wait.until(EC.element_to_be_clickable(maisDias1)).click()
-time.sleep(5)
+driver.implicitly_wait(5)
 
 # Scroll para o segundo botão de mais dias e clicar
 driver.execute_script('scrollBy(0,2000)')
 wait.until(EC.element_to_be_clickable(maisDias2)).click()
-time.sleep(5)
+driver.implicitly_wait(5)
 
 # Loop para expandir todos os dropdowns de dias
 driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.HOME)
-time.sleep(2)
+driver.implicitly_wait(5)
+
 for i in range(2, 16):
     dropdown_arrow = (By.XPATH, f"(//span[@class='dropdown-arrow'])[{i}]")
     driver.execute_script('scrollBy(0,800)')
     wait.until(EC.element_to_be_clickable(dropdown_arrow)).click()
+    # Sleep para garantir que a ação de clicar no elemento seja completada antes que o script passe para a próxima interação.
     time.sleep(1)
 
 # Encontrar elementos de dias, temperaturas e umidades
