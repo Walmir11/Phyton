@@ -1,12 +1,13 @@
 import time
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
+from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service as ChromeService
 
 # Configuração do WebDriver
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
@@ -39,19 +40,21 @@ driver.find_element(*clima_15Dias).click()
 time.sleep(10)
 
 # Scroll para o primeiro botão de mais dias e clicar
-actions.move_to_element(driver.find_element(*maisDias1)).perform()
+driver.execute_script('scrollBy(0,1000)')
 wait.until(EC.element_to_be_clickable(maisDias1)).click()
 time.sleep(5)
 
 # Scroll para o segundo botão de mais dias e clicar
-actions.move_to_element(driver.find_element(*maisDias2)).perform()
+driver.execute_script('scrollBy(0,2000)')
 wait.until(EC.element_to_be_clickable(maisDias2)).click()
 time.sleep(5)
 
 # Loop para expandir todos os dropdowns de dias
+driver.find_element(By.TAG_NAME,'body').send_keys(Keys.HOME)
+time.sleep(2)
 for i in range(2, 16):
     dropdown_arrow = (By.XPATH, f"(//span[@class='dropdown-arrow'])[{i}]")
-    actions.move_to_element(driver.find_element(*dropdown_arrow)).perform()
+    driver.execute_script('scrollBy(0,800)')
     wait.until(EC.element_to_be_clickable(dropdown_arrow)).click()
     time.sleep(1) 
 
