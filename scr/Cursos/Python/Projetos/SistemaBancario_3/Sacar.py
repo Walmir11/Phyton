@@ -14,4 +14,4 @@ class Sacar(Transacao):
         sucesso_transacao = conta.sacar(self.valor)
 
         if sucesso_transacao:
-            conta.historico.adicionar_transacao(self)
+            conta.historico.adicionar_registro(self)
