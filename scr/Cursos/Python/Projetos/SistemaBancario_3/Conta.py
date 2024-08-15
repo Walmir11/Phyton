@@ -13,7 +13,7 @@ class Conta(ABC):
 
     @classmethod
     def nova_conta(cls, nome, number):
-            return cls(number, nome)
+        return cls(number, nome)
 
     @property
     def saldo(self):
