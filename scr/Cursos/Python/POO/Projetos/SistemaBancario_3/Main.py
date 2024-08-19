@@ -1,12 +1,7 @@
 import textwrap
 import Conta
-import Cliente
-import ContaCorrente
 import Depositar
-import Historico
 import PessoaFisica
-import Sacar
-import Transacao
 
 
 def menu():
