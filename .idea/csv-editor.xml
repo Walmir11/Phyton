@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/scr/Cursos/Pandas/Pastas Criadas/df_vendas_novo.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\scr\Cursos\Pandas\Pastas Criadas\df_vendas_novo.csv">
           <value>
             <Attribute>
