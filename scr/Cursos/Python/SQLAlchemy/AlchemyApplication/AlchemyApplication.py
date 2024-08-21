@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, inspect
 from sqlalchemy.orm import declarative_base, relationship
 
-base = declarative_base()
+Base = declarative_base()
 
-class User(base):
+class User(Base):
     # Inicia uma tabela
     __tablename__ = 'user_account'
     # Atributos
@@ -20,8 +20,9 @@ class User(base):
     def __repr__(self):
         return f'User (id = {self.id}, name = {self.name}, fullname = {self.fullname})'
 
-class Address(base):
-    id = Column(Integer, primary_key=True, autoincrement=True)
+class Address(Base):
+    __tablename__ = 'address'
+    id = Column(Integer, primary_key=True)
     # nullable=False -> Não pode ser nulo
     email_address = Column(String(30), nullable=False)
     user_id = Column(Integer, ForeignKey('user_account.id'), nullable=False)
@@ -34,3 +35,22 @@ class Address(base):
         return f'Adress (id = {self.id}, email = {self.email_address} )'
 
 print(User.__tablename__)
+print(Address.__tablename__)
+
+# Conexão com o banco de dados
+engine = create_engine('sqlite://')
+
+# Criando as classes como tavelas no banco de dados
+Base.metadata.create_all(engine)
+
+# Inspeção do banco de dados, posso recuperar informações sobre o banco de dados
+inspetor_engine = inspect(engine)
+
+# Verificar se a tabela existe
+print(inspetor_engine.has_table('user_account'))
+
+# Recuperar o nome das tabelas
+print(inspetor_engine.get_table_names())
+
+# Recuperar o nome do schema
+print(inspetor_engine.default_schema_name)
