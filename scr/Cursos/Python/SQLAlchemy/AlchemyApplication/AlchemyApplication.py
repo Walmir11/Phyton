@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, inspect
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base, relationship, Session
 
 Base = declarative_base()
 
@@ -14,7 +14,7 @@ class User(Base):
     # Relacionamento, back_populates -> Faz a relação entre as tabelas
     # cascade='all, delete-orphan' -> Se o objeto for deletado, deleta o objeto relacionado
     address = relationship(
-        'Adress', back_populates='user', cascade='all, delete-orphan'
+        'Address', back_populates='user', cascade='all, delete-orphan'
     )
 
     def __repr__(self):
@@ -27,12 +27,12 @@ class Address(Base):
     email_address = Column(String(30), nullable=False)
     user_id = Column(Integer, ForeignKey('user_account.id'), nullable=False)
 
-    # Relacionamento
-    user = relationship('User' , back_populates='adress')
+    # Relacionamento, back_populates -> Faz a relação entre as tabelas
+    user = relationship('User' , back_populates='address')
 
     # Representação da classe
     def __repr__(self):
-        return f'Adress (id = {self.id}, email = {self.email_address} )'
+        return f'Address (id = {self.id}, email = {self.email_address} )'
 
 print(User.__tablename__)
 print(Address.__tablename__)
@@ -54,3 +54,28 @@ print(inspetor_engine.get_table_names())
 
 # Recuperar o nome do schema
 print(inspetor_engine.default_schema_name)
+
+with Session(engine) as session:
+    walmir = User(
+        name='Walmir',
+        fullname='Walmir Neto',
+        address=[Address(email_address='walmirneto@email.com')]
+    )
+
+    ana = User(
+        name='Ana',
+        fullname='Ana Luiza',
+        address=[Address(email_address='anaolimene@email.com'),
+                   Address(email_address='anamenezes@email.com')]
+    )
+
+    patrick = User(
+        name='Patrick',
+        fullname='Patrick Neto'
+    )
+
+    # Adicionando os objetos ao banco de dados(persistencia de dados)
+    session.add_all([walmir, ana, patrick])
+
+    # Commitando as alterações
+    session.commit()
