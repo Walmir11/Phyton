@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, inspect
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine, inspect, select, func
 from sqlalchemy.orm import declarative_base, relationship, Session
 
 Base = declarative_base()
@@ -66,7 +66,7 @@ with Session(engine) as session:
         name='Ana',
         fullname='Ana Luiza',
         address=[Address(email_address='anaolimene@email.com'),
-                   Address(email_address='anamenezes@email.com')]
+                 Address(email_address='anamenezes@email.com')]
     )
 
     patrick = User(
@@ -79,3 +79,58 @@ with Session(engine) as session:
 
     # Commitando as alterações
     session.commit()
+
+# Consulta de nomes
+stmt = select(User).where(User.name.in_(["Walmir", 'Ana']))
+print('~'*60)
+print('Imprimindo nomes')
+for user in session.scalars(stmt):
+    print(user)
+
+# Consulta de endereços
+stmt_address = select(Address).where(Address.id.in_([1]))
+print('~'*60)
+print('Imprimindo 1 email')
+# Retorna um email
+print(session.scalar(stmt_address))
+
+stmt_address2 = select(Address).where(Address.user_id.in_([2]))
+print('~'*60)
+print('Imprimindo emails')
+# Retorna todos os emails
+for address in session.scalars(stmt_address2):
+    print(address)
+
+# Printa a função sql de uma consulta
+print('~'*60)
+print(select(User).order_by(User.fullname.desc()))
+
+# Ordenando os nomes
+stmt_order = select(User).order_by(User.fullname.desc())
+print('~'*60)
+print('Imprimindo nomes em ordem')
+for i in session.scalars(stmt_order):
+    print(i)
+
+stmt_join = select(User.fullname, Address.email_address).join_from(User, Address)
+print('~'*60)
+print('Imprimindo join')
+for i in session.scalars(stmt_join):
+    print(i)
+
+print('~'*60)
+# Printa a função sql de uma consulta
+print(select(User.fullname, Address.email_address).join_from(User, Address))
+
+print('~'*60)
+print('Outra forma de imprimir o join')
+connection = engine.connect()
+results = connection.execute(stmt_join).fetchall()
+for i in results:
+    print(i)
+
+stmt_count = select(func.count('*')).select_from(User)
+print('~'*60)
+print('Contando o número de usuários')
+for i in session.scalars(stmt_count):
+    print(i)
