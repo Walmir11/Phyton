@@ -40,7 +40,7 @@ print(Address.__tablename__)
 # Conexão com o banco de dados
 engine = create_engine('sqlite://')
 
-# Criando as classes como tavelas no banco de dados
+# Criando as classes como tabelas no banco de dados
 Base.metadata.create_all(engine)
 
 # Inspeção do banco de dados, posso recuperar informações sobre o banco de dados
@@ -134,3 +134,5 @@ print('~'*60)
 print('Contando o número de usuários')
 for i in session.scalars(stmt_count):
     print(i)
+
+session.close()
