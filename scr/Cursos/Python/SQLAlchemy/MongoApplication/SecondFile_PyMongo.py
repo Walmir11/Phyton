@@ -7,6 +7,8 @@ uri = "mongodb+srv://Walmir11:Ginecas10@wcluster.hlrtn.mongodb.net/?retryWrites=
 client = pyM.MongoClient(uri)
 db = client.test
 posts = db.posts
+# inserção de um documento
+print(db.posts)
 
 for post in posts.find():
     pprint(post)
@@ -51,3 +53,23 @@ print('*'*50)
 print('Coleções armazenadas no mongoDB\n')
 for x in db.list_collection_names():
     print(x)
+
+# Exemplo de delete_one
+print('*'*50)
+print('Deletando um documento com o autor Mike')
+result = posts.delete_one({'author': 'Mike'})
+print(f'Documentos deletados: {result.deleted_count}')
+
+# Exemplo de delete_many
+print('*'*50)
+print('Deletando todos os documentos com a tag insert')
+result = posts.delete_many({'tags': 'insert'})
+print(f'Documentos deletados: {result.deleted_count}')
+
+# Exemplo de drop
+print('*'*50)
+print('Deletando a coleção posts')
+db['posts'].drop()
+
+# Deletando o banco de dados
+client.drop_database('test')
